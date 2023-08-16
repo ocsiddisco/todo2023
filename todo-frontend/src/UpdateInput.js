@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Tooltip from "@mui/material/Tooltip";
 import APIHelper from "./APIHelper.js";
 
 // Create an UpdateInput component
@@ -12,12 +13,18 @@ function UpdateInput(props) {
     setShowInputEle(true);
   };
 
+  // update
   const updateTodo = async (e, id) => {
     e.stopPropagation();
     console.log("input id", id, typeof id);
     const payload = {
       task: updateTask,
     };
+
+    if (!updateTask) {
+      alert("please enter something");
+      return;
+    }
     const updatedTodo = await APIHelper.updateTodo(id, payload);
     setShowInputEle(false);
     setUpdateTask("");
@@ -25,31 +32,59 @@ function UpdateInput(props) {
     return props.onUpdateTodo(id, updatedTodo);
   };
 
+  // delete
+  const deleteTodo = async (e, id) => {
+    console.log("id delete updateinput", id);
+    try {
+      e.stopPropagation();
+      const deleted = await APIHelper.deleteTodo(id);
+      if (deleted) {
+        console.log("it is deleted");
+        return props.onDeleteTodo(id);
+      }
+    } catch (err) {
+      console.log("error delete", err);
+    }
+  };
+
   return (
-    <span>
+    <>
       {showInputEle ? (
-        <div>
+        <div className="container-update-input">
           <input
+            className="update-input"
             type="text"
+            placeholder={props.value}
             value={updateTask}
             onChange={(e) => setUpdateTask(e.target.value)}
             autoFocus
           />
-          <button onClick={(e) => updateTodo(e, props.idTask)}>confirm</button>
+          <button
+            className="button-confirm"
+            onClick={(e) => updateTodo(e, props.idTask)}
+          >
+            confirm
+          </button>
         </div>
       ) : (
-        <span
-          style={{
-            display: "inline-block",
-            height: "25px",
-            minWidth: "300px",
-          }}
-          onClick={handleClick} // onClick event to toggle showInputEle
-        >
-          {props.value} {props.idTask}
-        </span>
+        <div className="container-task">
+          {/* // onClick event to toggle showInputEle */}
+          <Tooltip title="Click to modify the task">
+            <div className="display-task" onClick={handleClick}>
+              {props.value}
+            </div>
+          </Tooltip>
+          <div className="delete-task">
+            <Tooltip
+              title="Delete"
+              onClick={(e) => deleteTodo(e, props.idTask)}
+            >
+              X
+            </Tooltip>
+          </div>
+        </div>
       )}
-    </span>
+    </>
   );
 }
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import APIHelper from "./APIHelper.js";
 import UpdateInput from "./UpdateInput";
+import "animate.css";
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -35,18 +36,9 @@ function App() {
     return console.log("list updated");
   };
 
-  // delete
-  const deleteTodo = async (e, id) => {
-    try {
-      e.stopPropagation();
-      const deleted = await APIHelper.deleteTodo(id);
-      setTodos(todos.filter(({ id: i }) => id !== i));
-      if (deleted) {
-        return console.log("it is deleted");
-      }
-    } catch (err) {
-      console.log("error delete", err);
-    }
+  // handle delete from child component
+  const handleDeleteTodo = (id) => {
+    setTodos(todos.filter(({ id: i }) => id !== i));
   };
 
   // handle update from child component
@@ -56,31 +48,32 @@ function App() {
 
   return (
     <div className="App">
-      <div>
+      <div className="title">To Do List</div>
+      <div className="container-input">
         <input
           id="todo-input"
           type="text"
+          placeholder="Type a new task..."
           value={newTask}
           onChange={({ target }) => setNewTask(target.value)}
         />
         <button type="button" onClick={createTodo}>
-          Add
+          Add to the list
         </button>
       </div>
 
       <ul>
-        {todos.map(({ id, task, completed }, i) => (
+        {todos.map(({ id, task }, i) => (
           <li
             key={i}
-            // onClick={(e) => updateTodo(e, id)}
-            // className={completed ? "completed" : ""}
+            className="animate__animated animate__fadeInUp animate__delay-0.5s"
           >
             <UpdateInput
               value={task}
               idTask={id}
               onUpdateTodo={handleUpdateTodo}
+              onDeleteTodo={handleDeleteTodo}
             />
-            <span onClick={(e) => deleteTodo(e, id)}>X</span>
           </li>
         ))}
       </ul>
