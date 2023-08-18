@@ -63,9 +63,9 @@ li {
 input {
   height: 40px;
   width: 80%;
-  border: 2px solid #889EB1;
+  border: 1px solid #889EB1;
   border-radius: 5px;
-  background-color:  #97AFB9;
+  background-color:  #aec2cb;
   outline: none;
   color:#846280;
   padding-left: 10px;
@@ -104,6 +104,7 @@ button {
 button:hover,
 button:focus {
   background-color: #889EB1;
+  outline: none;
 }
 
 
@@ -118,8 +119,7 @@ button:focus {
 }
 
 .update-input {
-  height: 20px;
-  padding:  0 10px 0 10px;
+  height: 25px;
   margin-right:10px;
   width:100%;
   box-shadow: none;

@@ -1,0 +1,20 @@
+{
+  "name": "todo2023",
+  "version": "1.0.0",
+  "description": "Start front-end with: npm start Start back-end with: nodemon server.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "cd todo-backend && npm start & cd todo-frontend && npm start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ocsiddisco/todo2023.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ocsiddisco/todo2023/issues"
+  },
+  "homepage": "https://github.com/ocsiddisco/todo2023#readme"
+}

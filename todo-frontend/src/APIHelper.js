@@ -23,9 +23,9 @@ async function createTodo(newTask) {
 }
 
 // update
-async function updateTodo(id, payload) {
-  console.log("got here");
-  const updatedTodo = await fetch(`${API_URL}${id}`, {
+async function updateTodo(payload) {
+  console.log("3", payload);
+  const updatedTodo = await fetch(`${API_URL}${payload.id}`, {
     method: "PUT",
     body: JSON.stringify(payload),
     headers: {
