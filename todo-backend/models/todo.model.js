@@ -1,15 +1,38 @@
-// const { client } = require("../services/mongo");
-const todoDB = require("./todo.mongo");
+// validation schema todo for mongo db
+
+// db.createCollection("todo-list", {
+//   validator: {
+//     $jsonSchema: {
+//       bsonType: "object",
+//       title: "Todo Object Validation",
+//       required: [task, completed, id],
+//       properties: {
+//         task: {
+//           bsonType: "String",
+//         },
+//         completed: {
+//           bsonType: "Bool",
+//         },
+//         id: {
+//           bsonType: "Int",
+//         },
+//         // userID: {
+//         //   bsonType: "Int",
+//         // },
+//       },
+//     },
+//   },
+// });
 
 // Get all the todos
-async function findAllTodos(client) {
+async function findAllTodos(client, userId) {
   const listTodo = await client
     .db("todos-app")
     .collection("todo-list")
-    .find({});
-  const results = await listTodo.toArray();
-  if (results.length > 0) {
-    return results;
+    .find({ userId: userId });
+  const result = await listTodo.toArray();
+  if (result.length > 0) {
+    return result;
   } else {
     console.log(`No todo found.`);
   }
@@ -22,7 +45,9 @@ async function getLatestTodoNumber(client) {
   const latestTodo = await client
     .db("todos-app")
     .collection("todo-list")
-    //we pass an empty filter {} as the first argument to findOne to match all documents in the collection. We then provide the sort option { id: -1 } to sort the documents based on the "id" field in descending order.
+    //we pass an empty filter {} as the first argument
+    // to findOne to match all documents in the collection.
+    // We then provide the sort option { id: -1 } to sort the documents based on the "id" field in descending order.
     .findOne({}, { sort: { id: -1 } });
 
   if (!latestTodo) {
@@ -40,6 +65,13 @@ async function createTodo(client, newTodo) {
     id: newId,
     completed: false,
   });
+
+  // const addNewTodo = {
+  //   id: newId,
+  //   task: newTodo.task,
+  //   completed: false,
+  //   userId: newTodo.userID
+  // };
   const result = await client
     .db("todos-app")
     .collection("todo-list")
@@ -51,7 +83,6 @@ async function createTodo(client, newTodo) {
 
 // Update Todo
 async function updateTodo(client, todoId, updatedTodo) {
-  console.log("hu?");
   const result = await client
     .db("todos-app")
     .collection("todo-list")

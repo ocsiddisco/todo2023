@@ -7,13 +7,23 @@ const {
   deleteTodo,
 } = require("../models/todo.model");
 
-// fetch all
+// fetch all todo of user
 async function httpFindAllTodos(req, res) {
-  console.log(req.query);
+  const userId = Number(req.params.userId);
+  console.log("auth todos controller", req.isAuthenticated());
+
+  console.log("userID controle todo", userId);
+  if (!userId) {
+    return res.status(400).json({ error: "Missing required id property" });
+  }
   // controller manipulates data into a format that works for the api, then transforms it into json to return it to the front end
   // passing parameters skip and limit to send this info to the DB
-  const todos = await findAllTodos(client);
-  return res.status(200).json(todos);
+  const todos = await findAllTodos(client, userId);
+  if (!todos) {
+    return res.status(500).json({ Error: "Failed to fetch todo" });
+  } else {
+    return res.status(200).json(todos);
+  }
 }
 
 // create
