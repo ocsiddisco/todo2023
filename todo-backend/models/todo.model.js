@@ -22,7 +22,7 @@ async function getLatestTodoNumber(client) {
   const latestTodo = await client
     .db("todos-app")
     .collection("todo-list")
-    //, we pass an empty filter {} as the first argument to findOne to match all documents in the collection. We then provide the sort option { id: -1 } to sort the documents based on the "id" field in descending order.
+    //we pass an empty filter {} as the first argument to findOne to match all documents in the collection. We then provide the sort option { id: -1 } to sort the documents based on the "id" field in descending order.
     .findOne({}, { sort: { id: -1 } });
 
   if (!latestTodo) {
@@ -45,17 +45,20 @@ async function createTodo(client, newTodo) {
     .collection("todo-list")
     .insertOne(addNewTodo);
   console.log(`New todo created with the following id: ${addNewTodo.id}`);
+  console.log("result create todo model", { result });
   return result;
 }
 
 // Update Todo
 async function updateTodo(client, todoId, updatedTodo) {
+  console.log("hu?");
   const result = await client
     .db("todos-app")
     .collection("todo-list")
     .updateOne({ id: todoId }, { $set: updatedTodo });
-  console.log(`${result.matchedCount} document(s) matched the query criteria.`);
-  console.log(`${result.modifiedCount} document(s) was/were updated.`);
+  // console.log(`${result.matchedCount} document(s) matched the query criteria.`);
+  // console.log(`${result.modifiedCount} document(s) was/were updated.`);
+  console.log("result update in model.", { result });
   return result;
 }
 

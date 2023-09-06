@@ -45,6 +45,7 @@ async function httpUpdateTodo(req, res) {
   }
 
   const response = await updateTodo(client, todoId, updatedTodo);
+  console.log("updatedtodo Controller response", response);
 
   if (!response) {
     return res.status(500).json({ Error: "Failed to update todo" });
