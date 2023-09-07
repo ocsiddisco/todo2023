@@ -19,15 +19,12 @@ const AUTH_OPTIONS = {
 
 // used when user is authenticated
 async function verifyCallback(req, accessToken, refreshToken, profile, done) {
-  console.log("google profile", profile);
-  console.log("---------");
-  console.log("accessToken", accessToken);
-
   try {
     const email = profile._json.email;
     const user = await findUser({ email: email });
     if (user) {
       console.log("user in auth router", user);
+      // const user = {id: profile.id, username: profile.username}
       return done(null, user);
     } else {
       console.log("no user in auth router", user);
@@ -48,6 +45,7 @@ async function verifyCallback(req, accessToken, refreshToken, profile, done) {
   // incorrect credential: we can pass an error as first option(here used null so there is no error)
   // TODO: change null if error during log in + add users to database
 }
+
 const passportConfig = {
   passport: passport, // Export the Passport instance
   strategy: new Strategy(AUTH_OPTIONS, verifyCallback), // Export the strategy instance

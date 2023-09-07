@@ -30,6 +30,7 @@ authenticateRouter.get(
   }),
   (req, res) => {
     console.log(req.isAuthenticated());
+    console.log("  auth router req.user", req.user);
 
     res.redirect(`${URL_FE}?userId=${req.user.userId}`);
   }
