@@ -1,5 +1,3 @@
-const { client } = require("../services/mongo");
-
 const {
   findAllTodos,
   createTodo,
@@ -9,16 +7,19 @@ const {
 
 // fetch all todo of user
 async function httpFindAllTodos(req, res) {
-  const userId = Number(req.params.userId);
-  console.log("auth todos controller", req.isAuthenticated());
+  console.log("httpFindAllTodos");
+  const userId = req.userId;
 
-  console.log("userID controle todo", userId);
+  console.log({ userId });
+
   if (!userId) {
     return res.status(400).json({ error: "Missing required id property" });
   }
   // controller manipulates data into a format that works for the api, then transforms it into json to return it to the front end
   // passing parameters skip and limit to send this info to the DB
-  const todos = await findAllTodos(client, userId);
+  const todos = await findAllTodos(userId);
+  console.log("todos controlers todos", todos);
+
   if (!todos) {
     return res.status(500).json({ Error: "Failed to fetch todo" });
   } else {
@@ -26,59 +27,58 @@ async function httpFindAllTodos(req, res) {
   }
 }
 
-// create
+// CREATE TODO
 async function httpCreateTodo(req, res) {
-  console.log("create controller", req.body);
+  console.log("http createtodo controller");
   const newTodo = req.body;
-  console.log("create controller", newTodo);
+  console.log("httpcreate newTodo", newTodo);
+  const userId = req.userId;
 
   if (!newTodo) {
     return res.status(400).json({ error: "Missing required task property" });
   }
 
-  const success = await createTodo(client, newTodo);
-  if (!success) {
+  const response = await createTodo(userId, newTodo);
+  if (!response) {
     return res.status(500).json({ Error: "Failed to add todo" });
   } else {
-    return res.status(201).json(newTodo);
+    return res.status(201).json(response);
   }
 }
 
-// update
+// UPDATE TODO
 async function httpUpdateTodo(req, res) {
   console.log("updatedtodo Controller", req.body);
 
-  const todoId = Number(req.params.id);
-  const updatedTodo = req.body;
-  if (!todoId) {
+  const userId = req.userId;
+  const todoID = Number(req.body.todoID);
+  const updatedTodo = req.body.todo;
+  console.log("httpupdate todo todoId then updatedTodo", todoID, updatedTodo);
+  if (!todoID) {
     return res.status(400).json({ error: "Missing required id property" });
   }
 
-  const response = await updateTodo(client, todoId, updatedTodo);
-  console.log("updatedtodo Controller response", response);
+  const response = await updateTodo(userId, todoID, updatedTodo);
 
   if (!response) {
     return res.status(500).json({ Error: "Failed to update todo" });
   } else {
-    return res.status(201).json(updatedTodo);
+    return res.status(200).json(response);
   }
 }
 
-// delete
+// DELETE TODO
 async function httpDeleteTodo(req, res) {
-  console.log("in controller", typeof req.params.id);
-  const todoId = Number(req.params.id);
+  const userId = req.userId;
+  const todoID = Number(req.body.todoID);
 
-  const deleted = await deleteTodo(client, todoId);
-  console.log({ deleted });
-  if (!deleted) {
-    return res.status(400).json({
+  const response = await deleteTodo(userId, todoID);
+  if (!response) {
+    return res.status(500).json({
       error: "Todo not deleted",
     });
   }
-  return res.status(200).json({
-    ok: true,
-  });
+  return res.status(200).json(response);
 }
 
 module.exports = {

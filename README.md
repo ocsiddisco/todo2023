@@ -20,3 +20,6 @@ google Cloud platform (google api console) to obtain oauth 2.0 client credential
 passport: authentication middleware for node. (expose a common approach to doing authentication regardless of which provider(facebook, twitter, google..etc))
 
 client ID & client secret in our google console: connect node app with google, so google recognise it is our app requesting users to log in.
+
+Taking a step back in this project by letting the oauth2 authentication go. While I could log in and out using Oauth2, I have not succed in keeping the session alive with the user authenticated. After pending quite some time to debug this, I felt I could not use the oauth2 properly enough to guaranty the safety of the user's credentials.
+I am now implementing a login/logout to the database through 'simple' inputs from the user and using JsonWebToken to verify the user's authorization.

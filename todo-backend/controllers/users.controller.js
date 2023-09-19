@@ -1,4 +1,19 @@
-// const { client } = require("../services/mongo");
+const { deleteUser } = require("../models/user.model");
+
+async function httpDeleteUser(req, res) {
+  const userId = req.userId;
+  const deleted = await deleteUser(userId);
+  if (!deleted) {
+    return res.status(400).json({
+      error: "User not deleted",
+    });
+  }
+  return res.status(200).json({
+    ok: true,
+  });
+}
+
+module.exports = { httpDeleteUser };
 
 // const { createUser } = require("../models/user.model");
 

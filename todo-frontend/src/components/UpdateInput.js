@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 import Tooltip from "@mui/material/Tooltip";
+import { Icon } from "react-icons-kit";
+import { trash2 } from "react-icons-kit/feather/trash2";
+import { save } from "react-icons-kit/feather/save";
+import toast from "react-hot-toast";
 
 // Create an UpdateInput component
 function UpdateInput(props) {
@@ -25,13 +29,13 @@ function UpdateInput(props) {
     e.stopPropagation();
 
     if (!updateTask) {
-      alert("Please enter something");
+      toast.error("Please enter your task.");
       return;
     }
 
     const payload = {
-      id: props.idTask,
-      task: updateTask,
+      todoID: props.todoID,
+      todo: updateTask,
     };
 
     setShowInputEle(false);
@@ -42,7 +46,7 @@ function UpdateInput(props) {
 
   // delete
   const deleteTodo = async (e) => {
-    const id = props.idTask;
+    const id = props.todoID;
     e.stopPropagation();
     return props.onDeleteTodo(id);
   };
@@ -51,6 +55,9 @@ function UpdateInput(props) {
     <>
       {showInputEle ? (
         <div className="container-update-input">
+          <label for="Update todo" class="visuallyhidden">
+            Update todo
+          </label>
           <input
             className="update-input"
             type="text"
@@ -60,7 +67,7 @@ function UpdateInput(props) {
             autoFocus
           />
           <button className="button-confirm" onClick={updateTodo}>
-            Confirm
+            <Icon size={24} icon={save} />
           </button>
         </div>
       ) : (
@@ -68,15 +75,14 @@ function UpdateInput(props) {
           {/* // onClick event to toggle showInputEle & assign props value for input field*/}
           <Tooltip title="Click to modify the task">
             <div className="display-task" onClick={handleClick}>
-              {props.idTask}
               {props.value}
             </div>
           </Tooltip>
-          <div className="delete-task">
-            <Tooltip title="Delete" onClick={deleteTodo}>
-              X
-            </Tooltip>
-          </div>
+          <Tooltip title="Delete" onClick={deleteTodo}>
+            <button className="delete-task">
+              <Icon size={20} icon={trash2} />
+            </button>
+          </Tooltip>
         </div>
       )}
     </>
