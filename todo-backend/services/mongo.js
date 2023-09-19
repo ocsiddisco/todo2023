@@ -1,16 +1,33 @@
 require("dotenv").config();
-const TodoModel = require("../models/todo.mongo");
 
-const { MongoClient } = require("mongodb");
-const client = new MongoClient(process.env.MONGO_URL);
+const mongoose = require("mongoose");
 
-async function mongoConnect(client) {
-  client.connect();
-  console.log("connected");
+async function mongoConnect() {
+  try {
+    await mongoose.connect(process.env.MONGO_URL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log("connected");
+  } catch (error) {
+    console.log("Error connecting to MongoDB", error);
+    throw error;
+  }
 }
 
 module.exports = {
-  MongoClient,
-  client,
   mongoConnect,
 };
+
+// const { MongoClient } = require("mongodb");
+// const client = new MongoClient(process.env.MONGO_URL);
+
+// async function mongoConnect() {
+//   client.connect();
+//   console.log("connected");
+// }
+// module.exports = {
+//   MongoClient,
+//   client,
+//   mongoConnect,
+// };

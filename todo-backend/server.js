@@ -1,18 +1,26 @@
-const http = require("http");
+const https = require("https");
+const fs = require("fs");
+const { mongoConnect } = require("./services/mongo");
+
 require("dotenv").config();
-const { findAllTodos } = require("./models/todo.model");
-const { mongoConnect, client } = require("./services/mongo");
 
 const app = require("./app");
 
 const PORT = process.env.PORT || 8000;
 
-const server = http.createServer(app);
+//key & cert : establish a secure and encrypted connection between your server and clients
+const server = https.createServer(
+  {
+    key: fs.readFileSync("key.pem"),
+    cert: fs.readFileSync("cert.pem"),
+  },
+  app
+);
 
 async function startServer() {
   // connect to server before starting app -> data available to handle requests users
 
-  await mongoConnect(client);
+  await mongoConnect();
   console.log("connected to DB");
 
   server.listen(PORT, () => {

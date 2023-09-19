@@ -1,9 +1,11 @@
 {
   "name": "todo2023",
   "version": "1.0.0",
-  "description": "Start front-end with: npm start Start back-end with: nodemon server.js",
+  "description": "Todo app",
   "main": "index.js",
   "scripts": {
+    "install-server": "npm install --prefix todo-backend",
+    "install-client": "npm install --prefix todo-frontend",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "cd todo-backend && npm start & cd todo-frontend && npm start"
   },
@@ -16,5 +18,7 @@
   "bugs": {
     "url": "https://github.com/ocsiddisco/todo2023/issues"
   },
-  "homepage": "https://github.com/ocsiddisco/todo2023#readme"
+  "homepage": "https://github.com/ocsiddisco/todo2023#readme",
+  "dependencies": {
+  }
 }
