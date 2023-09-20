@@ -23,7 +23,7 @@ async function startServer() {
   await mongoConnect();
   console.log("connected to DB");
 
-  server.listen(PORT, () => {
+  server.listen(PORT, "0.0.0.0", () => {
     console.log(`listening to port ${PORT}`);
   });
 }
