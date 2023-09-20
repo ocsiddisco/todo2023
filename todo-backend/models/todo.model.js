@@ -48,6 +48,8 @@ async function getLatestTodoNumber(userId) {
 
 // CREATE NEW TODO
 async function createTodo(userId, todo) {
+  console.log("todo model create todo");
+
   try {
     const getId = await getLatestTodoNumber(userId);
 
@@ -57,16 +59,12 @@ async function createTodo(userId, todo) {
       todoID: newId,
       completed: false,
     });
-    console.log("newTodo createtodo", newTodo);
 
     const updateUser = await User.findOneAndUpdate(
       { _id: userId },
       { $push: { todos: newTodo } },
       { new: true } // To return the updated user document
     );
-
-    console.log("this is the new list of todos", updateUser.todos);
-
     return true;
   } catch (error) {
     console.log("message", error);
@@ -75,7 +73,7 @@ async function createTodo(userId, todo) {
 
 // UPDATE TODO
 async function updateTodo(userId, todoID, updatedTodo) {
-  console.log("got here");
+  console.log("todo model updateTodo");
   try {
     const result = await User.findOneAndUpdate(
       { _id: userId, "todos.todoID": todoID }, // Use $elemMatch to match the specific todo
@@ -84,7 +82,6 @@ async function updateTodo(userId, todoID, updatedTodo) {
     );
     // console.log(`${result.matchedCount} document(s) matched the query criteria.`);
     // console.log(`${result.modifiedCount} document(s) was/were updated.`);
-    console.log("result update in model.", result);
 
     if (!result) {
       // User or todo not found
@@ -100,7 +97,7 @@ async function updateTodo(userId, todoID, updatedTodo) {
 
 // DELETE TODO (Yeah one done!)
 async function deleteTodo(userId, todoID) {
-  console.log("in todo model", todoID);
+  console.log("delete todo model");
   try {
     const result = await User.findOneAndUpdate(
       { _id: userId },

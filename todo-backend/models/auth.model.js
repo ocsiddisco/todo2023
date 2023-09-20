@@ -5,12 +5,10 @@ var bcrypt = require("bcryptjs");
 async function signUp(username, email, password) {
   try {
     const user = new User({ username, email, password });
-    console.log("user auth.controller", user);
     const result = await user.save();
     if (!result) {
       return false;
     }
-    console.log("user.ID in auth model", user.id);
     return { id: user.id };
   } catch (error) {
     console.error("Error signing up user:", error);

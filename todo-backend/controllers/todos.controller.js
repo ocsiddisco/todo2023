@@ -10,8 +10,6 @@ async function httpFindAllTodos(req, res) {
   console.log("httpFindAllTodos");
   const userId = req.userId;
 
-  console.log({ userId });
-
   if (!userId) {
     return res.status(400).json({ error: "Missing required id property" });
   }
@@ -31,7 +29,6 @@ async function httpFindAllTodos(req, res) {
 async function httpCreateTodo(req, res) {
   console.log("http createtodo controller");
   const newTodo = req.body;
-  console.log("httpcreate newTodo", newTodo);
   const userId = req.userId;
 
   if (!newTodo) {
@@ -48,12 +45,11 @@ async function httpCreateTodo(req, res) {
 
 // UPDATE TODO
 async function httpUpdateTodo(req, res) {
-  console.log("updatedtodo Controller", req.body);
+  console.log("updatedtodo Controller");
 
   const userId = req.userId;
   const todoID = Number(req.body.todoID);
   const updatedTodo = req.body.todo;
-  console.log("httpupdate todo todoId then updatedTodo", todoID, updatedTodo);
   if (!todoID) {
     return res.status(400).json({ error: "Missing required id property" });
   }
