@@ -15,7 +15,7 @@ app.use(express.json());
 
 const listCors = [
   "http://localhost:3000",
-  "https://todo-app-backend-8q6w.onrender.com",
+  "https://todo-app-frontend-istz.onrender.com",
 ];
 
 var corsOptions = {
