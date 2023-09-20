@@ -13,7 +13,7 @@ function ListTodos() {
   function checkToken() {
     const token = sessionStorage.getItem("token");
     if (!token) {
-      navigate("/register");
+      navigate("/");
     }
   }
 
@@ -23,7 +23,6 @@ function ListTodos() {
     const listTodos = await APIHelper.getAllTodos();
     setTodos(listTodos);
   };
-
   useEffect(() => {
     fetchTodosAndSetTodos();
   }, []);
