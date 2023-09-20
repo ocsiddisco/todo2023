@@ -8,14 +8,8 @@ const app = require("./app");
 
 const PORT = process.env.PORT || 8000;
 
-//key & cert : establish a secure and encrypted connection between server and client
-const server = https.createServer(
-  {
-    key: fs.readFileSync("key.pem"),
-    cert: fs.readFileSync("cert.pem"),
-  },
-  app
-);
+//key & cert : establish a secure and encrypted connection between server and clients
+const server = https.createServer(app);
 
 async function startServer() {
   // connect to server before starting app -> data available to handle requests users
@@ -23,7 +17,7 @@ async function startServer() {
   await mongoConnect();
   console.log("connected to DB");
 
-  server.listen(PORT, "0.0.0.0", () => {
+  server.listen(PORT, () => {
     console.log(`listening to port ${PORT}`);
   });
 }
