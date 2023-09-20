@@ -9,15 +9,12 @@ function SignIn() {
   const navigate = useNavigate();
 
   const handleClick = async (credentials) => {
-    console.log("regiser", credentials);
-
     const response = await APIHelper.signIn(
       credentials.username,
       credentials.email,
       credentials.password
     );
     if (response) {
-      console.log("register response", response);
       navigate("/");
     }
   };

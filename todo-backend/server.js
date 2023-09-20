@@ -8,7 +8,7 @@ const app = require("./app");
 
 const PORT = process.env.PORT || 8000;
 
-//key & cert : establish a secure and encrypted connection between your server and clients
+//key & cert : establish a secure and encrypted connection between server and client
 const server = https.createServer(
   {
     key: fs.readFileSync("key.pem"),

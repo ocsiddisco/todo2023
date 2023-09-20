@@ -9,7 +9,6 @@ function Register() {
   const navigate = useNavigate();
 
   const handleClick = async (credentials) => {
-    console.log("regiser", credentials);
     try {
       const response = await APIHelper.signUp(
         credentials.username,
@@ -17,7 +16,6 @@ function Register() {
         credentials.password
       );
       if (response) {
-        console.log("register response", response);
         navigate("/");
       }
     } catch (error) {
