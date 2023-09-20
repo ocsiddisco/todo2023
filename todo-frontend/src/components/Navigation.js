@@ -6,7 +6,7 @@ import { NavLink, useLocation } from "react-router-dom";
 function Navigation() {
   const location = useLocation();
 
-  if (location.pathname === "/") {
+  if (location.pathname === "/todos") {
     return (
       <nav className="navigation profile">
         <NavLink className="" to="/logout">
@@ -23,7 +23,7 @@ function Navigation() {
   } else if (location.pathname === "/logout") {
     return (
       <nav className="navigation">
-        <NavLink className="" to="/">
+        <NavLink className="" to="/todos">
           <img
             className="imgNav goBackIcon"
             src={goBackIcon}

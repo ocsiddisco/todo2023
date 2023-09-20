@@ -17,12 +17,18 @@ const listCors = [
   "http://localhost:3000",
   "https://todo-app-backend-8q6w.onrender.com",
 ];
-app.use(
-  cors({
-    origin: listCors,
-    credentials: true, // Enable credentials (e.g., cookies, HTTP authentication)
-  })
-);
+
+var corsOptions = {
+  origin: function (origin, callback) {
+    if (listCors.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true, // Enable credentials (e.g., cookies, HTTP authentication)
+};
+app.use(cors(corsOptions));
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, Content-Type, Accept");

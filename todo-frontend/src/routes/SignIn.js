@@ -15,7 +15,7 @@ function SignIn() {
       credentials.password
     );
     if (response) {
-      navigate("/");
+      navigate("/todos");
     }
   };
 

@@ -35,7 +35,7 @@ function Logout() {
     try {
       const deleteUser = await APIHelper.deleteAccount();
       if (deleteUser) {
-        navigate("/register");
+        navigate("/");
       }
     } catch (error) {
       console.log(error);

@@ -16,7 +16,7 @@ function Register() {
         credentials.password
       );
       if (response) {
-        navigate("/");
+        navigate("/todos");
       }
     } catch (error) {
       console.log(error);
