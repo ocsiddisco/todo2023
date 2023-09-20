@@ -1,4 +1,6 @@
-const https = require("https");
+// const https = require("https");
+const http = require("http");
+
 const fs = require("fs");
 const { mongoConnect } = require("./services/mongo");
 
@@ -9,7 +11,7 @@ const app = require("./app");
 const PORT = process.env.PORT || 8000;
 
 //key & cert : establish a secure and encrypted connection between server and clients
-const server = https.createServer(app);
+const server = http.createServer(app);
 
 async function startServer() {
   // connect to server before starting app -> data available to handle requests users
