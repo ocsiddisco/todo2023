@@ -23,6 +23,7 @@ function ListTodos() {
     const listTodos = await APIHelper.getAllTodos();
     setTodos(listTodos);
   };
+
   useEffect(() => {
     fetchTodosAndSetTodos();
   }, []);
@@ -44,6 +45,9 @@ function ListTodos() {
   let maxId = 0;
 
   const findTodoID = async () => {
+    if (!sortedList) {
+      return maxId;
+    }
     sortedList.forEach((todo) => {
       if (todo.todoID > maxId) {
         maxId = todo.todoID + 1;
@@ -51,6 +55,7 @@ function ListTodos() {
     });
     return maxId;
   };
+
   // CREATE TODO
   const createTodo = async (e) => {
     e.target.blur();
@@ -62,7 +67,6 @@ function ListTodos() {
     }
     try {
       const newId = await findTodoID();
-      console.log(typeof maxId);
       const addNewTodo = await APIHelper.createTodo(newTask);
       if (addNewTodo) {
         const newTodo = { todo: newTask, todoID: newId };
