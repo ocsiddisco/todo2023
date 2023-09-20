@@ -15,7 +15,6 @@ async function httpSignUp(req, res) {
     if (!response) {
       return res.status(500).json({ Error: "Failed to update todo" });
     }
-    console.log("response.id in auth model", response.id);
     const token = jwt.sign({ id: response.id }, config.secret, {
       algorithm: "HS256",
       allowInsecureKeySizes: true,
@@ -37,7 +36,6 @@ async function httpSignIn(req, res) {
     const password = req.body.password;
 
     const userInfo = await signIn(username, password);
-    console.log("httpSignIn userInfo", userInfo);
 
     if (!userInfo) {
       return res.status(404).send({ message: "Incorrect Credentials!" });

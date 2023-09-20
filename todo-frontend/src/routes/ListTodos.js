@@ -42,7 +42,8 @@ function ListTodos() {
   };
 
   // FIND HIGHEST TODOID
-  let maxId = 0;
+  // set to 11 to match min ID possible in backend
+  let maxId = 11;
 
   const findTodoID = async () => {
     if (!sortedList) {
