@@ -4,8 +4,6 @@
   "description": "Todo app",
   "main": "index.js",
   "scripts": {
-    "install-server": "npm install --prefix todo-backend",
-    "install-client": "npm install --prefix todo-frontend",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "cd todo-backend && npm start & cd todo-frontend && npm start"
   },

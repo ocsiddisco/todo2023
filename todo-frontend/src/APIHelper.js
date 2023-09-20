@@ -1,9 +1,6 @@
 import toast from "react-hot-toast";
 
-// const API_URL = "https://localhost:8000";
-
-//api address for production
-const API_URL = "https://todo-app-backend-8q6w.onrender.com";
+const API_URL = process.env.REACT_APP_API_URL;
 
 //
 //

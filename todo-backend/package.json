@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --detectOpenHandles",    
-    "start": "node server.js",
-    "develop": "nodemone server.js"
+    "start": "node server.js"
     
   },
   "keywords": [],
