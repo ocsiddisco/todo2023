@@ -7,7 +7,6 @@ import toast from "react-hot-toast";
 
 // Create an UpdateInput component
 function UpdateInput(props) {
-  console.log("here");
   const [updateTask, setUpdateTask] = useState("");
   const [showInputEle, setShowInputEle] = useState(false);
 
