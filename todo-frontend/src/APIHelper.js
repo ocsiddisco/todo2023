@@ -1,6 +1,9 @@
 import toast from "react-hot-toast";
 
-const API_URL = "https://localhost:8000";
+// const API_URL = "https://localhost:8000";
+
+//api address for production
+const API_URL = "https://todo-app-backend-8q6w.onrender.com";
 
 //
 //
@@ -21,14 +24,12 @@ async function signUp(username, email, password) {
   });
   if (response.status === 201) {
     const data = await response.json();
-    console.log("data in sign up", data);
     const token = data.token;
     sessionStorage.setItem("token", token);
     return true;
   } else {
     // Registration failed, handle errors
     const errorData = await response.json(); // Parse the error JSON
-    console.error("Registration failed:", errorData);
     toast.error("Username already used.");
   }
 }
@@ -54,7 +55,6 @@ async function signIn(username, email, password) {
     } else {
       // Registration failed, handle errors
       const errorData = await response.json(); // Parse the error JSON
-      console.error("Registration failed:", errorData);
       toast.error("Incorrect credentials.");
     }
   } catch (error) {
@@ -65,7 +65,6 @@ async function signIn(username, email, password) {
 // SIGN OUT
 
 async function signOut() {
-  console.log("start sign out");
   const token = sessionStorage.getItem("token");
   sessionStorage.removeItem("token");
   const response = await fetch(`${API_URL}/api/auth/signout`, {
@@ -75,19 +74,16 @@ async function signOut() {
       Authorization: `Bearer ${token}`,
     },
   });
-  console.log("getting back here", response);
 
   if (response.status === 200) {
     return true;
   } else {
     const errorData = await response.json();
-    console.error("Registration failed:", errorData);
   }
 }
 
 // DELETE ACCOUNT
 async function deleteAccount() {
-  console.log("start deleting account");
   const token = sessionStorage.getItem("token");
   sessionStorage.removeItem("token");
   const response = await fetch(`${API_URL}/delete/user`, {
@@ -97,14 +93,12 @@ async function deleteAccount() {
       Authorization: `Bearer ${token}`,
     },
   });
-  console.log("getting back here", response);
 
   if (response.status === 200) {
     toast.success("Account deleted!");
     return true;
   } else {
     const errorData = await response.json();
-    console.error("Registration failed:", errorData);
     toast.error("Account not deleted.");
   }
 }
@@ -117,7 +111,6 @@ async function deleteAccount() {
 
 // FETCH ALL TODOS FOR X USER
 async function getAllTodos() {
-  console.log("getalltodos apihelper");
   const token = sessionStorage.getItem("token");
   const response = await fetch(`${API_URL}/todos`, {
     method: "GET",
@@ -127,13 +120,11 @@ async function getAllTodos() {
     },
   });
   const getTodos = await response.json();
-  console.log("getAllTodos, getTodos", getTodos);
   return getTodos;
 }
 
 // CREATE TODO
 async function createTodo(newTask) {
-  console.log("apihelp task", newTask, typeof newTask);
   const token = sessionStorage.getItem("token");
   const response = await fetch(`${API_URL}/todos`, {
     method: "POST",
@@ -146,7 +137,6 @@ async function createTodo(newTask) {
   if (response.status === 201) {
     return true;
   } else {
-    console.log("to do not created");
     toast.error("Task could not be created.");
   }
 }
@@ -165,7 +155,6 @@ async function updateTodo(payload) {
   if (response.status === 200) {
     return true;
   } else {
-    console.log("todo not updated");
     toast.error("Task could not be updated.");
   }
 }
@@ -173,7 +162,6 @@ async function updateTodo(payload) {
 // DELETE TODO
 async function deleteTodo(id) {
   const numberId = Number(id);
-  console.log("apihelper delete", typeof numberId, numberId);
   const token = sessionStorage.getItem("token");
   const response = await fetch(`${API_URL}/todos`, {
     method: "DELETE",
@@ -188,7 +176,6 @@ async function deleteTodo(id) {
 
     return true;
   } else {
-    console.log("todo not deleted");
     toast.error("Task could not be deleted.");
   }
 }

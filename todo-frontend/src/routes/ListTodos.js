@@ -17,19 +17,10 @@ function ListTodos() {
     }
   }
 
-  // hooks to keep the focus on the inputfield: not working
-  // const inputField = useCallback((inputElement) => {
-  //   console.log("got here");
-  //   if (inputElement) {
-  //     inputElement.focus();
-  //   }
-  // }, []);
-
   // GET ALL TODOS OF A USER
   const fetchTodosAndSetTodos = async () => {
     checkToken();
     const listTodos = await APIHelper.getAllTodos();
-    console.log("listTodos", listTodos);
     setTodos(listTodos);
   };
 
@@ -63,7 +54,6 @@ function ListTodos() {
   };
   // CREATE TODO
   const createTodo = async (e) => {
-    console.log("in create todo", newTask, typeof newTask);
     e.target.blur();
     e.preventDefault();
 
@@ -77,12 +67,10 @@ function ListTodos() {
       const addNewTodo = await APIHelper.createTodo(newTask);
       if (addNewTodo) {
         const newTodo = { todo: newTask, todoID: newId };
-        console.log(newTodo);
         setTodos([...todos, newTodo]);
       }
 
       setNewTask("");
-      console.log("list updated");
     } catch (error) {
       console.log("createtodo", error);
     }
@@ -92,14 +80,11 @@ function ListTodos() {
   // find todo by todoID and delete todo
 
   const handleDeleteTodo = async (todoID) => {
-    console.log(todoID);
     try {
       const deleteTodo = await APIHelper.deleteTodo(todoID);
       if (deleteTodo) {
         const newList = todos.filter((todo) => todo.todoID !== todoID);
-        console.log("newList", newList);
         setTodos(newList);
-        console.log("it is deleted");
       }
     } catch (err) {
       console.log("error delete", err);
@@ -112,14 +97,11 @@ function ListTodos() {
   const handleUpdateTodo = async (payload) => {
     try {
       const updatedTodo = await APIHelper.updateTodo(payload);
-      console.log("updatedtodo", updatedTodo);
       if (updatedTodo) {
         let todoToUpdate = sortedList.findIndex(
           (todo) => todo.todoID === payload.todoID
         );
-        console.log("todoToUpdate", sortedList[todoToUpdate]);
         sortedList[todoToUpdate].todo = payload.todo;
-        console.log("todoToUpdate2", sortedList[todoToUpdate]);
         setTodos(sortedList);
       } else {
         console.log("todo not updated");

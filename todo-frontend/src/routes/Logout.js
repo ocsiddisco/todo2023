@@ -16,7 +16,6 @@ function Logout() {
   //
 
   const handleSignOut = async () => {
-    console.log("signing out");
     try {
       const signedOut = await APIHelper.signOut();
 
@@ -33,7 +32,6 @@ function Logout() {
   //
 
   const handleDeleteAccount = async () => {
-    console.log("deleting user");
     try {
       const deleteUser = await APIHelper.deleteAccount();
       if (deleteUser) {
