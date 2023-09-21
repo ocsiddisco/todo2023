@@ -54,7 +54,7 @@ function UpdateInput(props) {
     <>
       {showInputEle ? (
         <div className="container-update-input">
-          <label for="Update todo" class="visuallyhidden">
+          <label for="Update todo" className="visuallyhidden">
             Update todo
           </label>
           <input

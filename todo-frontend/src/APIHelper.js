@@ -76,6 +76,7 @@ async function signOut() {
     return true;
   } else {
     const errorData = await response.json();
+    console.log(errorData);
   }
 }
 

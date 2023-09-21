@@ -6,6 +6,7 @@ import { eye } from "react-icons-kit/feather/eye";
 function Form(props) {
   const [icon, setIcon] = useState(eyeOff);
   const [type, setType] = useState("password");
+  const [submitted, setSubmitted] = useState(false);
 
   const [credentials, setCredentials] = useState({
     username: "",
@@ -19,9 +20,23 @@ function Form(props) {
       onInputChange(e);
     }
   };
+
+  // Function to validate email using regular expression
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   // gather all credentials user
   const onInputChange = (event) => {
     const { name, value } = event.target;
+
+    if (name === "email" && submitted) {
+      if (!validateEmail(value)) {
+        return;
+      }
+    }
+
     setCredentials((prevCredentials) => ({
       ...prevCredentials,
       [name]: value,
@@ -39,11 +54,24 @@ function Form(props) {
     }
   };
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    if (!validateEmail(credentials.email)) {
+      setSubmitted(true);
+      return;
+    }
+
+    setSubmitted(false); // Reset submitted state
+
+    props.handleClick(credentials);
+  };
+
   return (
     <>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="container-inputForm">
-          <label className="visuallyhidden" for="username">
+          <label className="visuallyhidden" htmlFor="username">
             Username
           </label>
           <input
@@ -56,7 +84,7 @@ function Form(props) {
             onChange={onInputChange}
             required
           />
-          <label className="visuallyhidden" for="email">
+          <label className="visuallyhidden" htmlFor="email">
             Email
           </label>
           <input
@@ -69,7 +97,17 @@ function Form(props) {
             onChange={onInputChange}
             required
           />
-          <label className="visuallyhidden" for="password">
+
+          <p
+            className={`error-message ${
+              submitted && !validateEmail(credentials.email)
+                ? ""
+                : "errorhidden"
+            }`}
+          >
+            Please enter a valid email address.
+          </p>
+          <label className="visuallyhidden" htmlFor="password">
             Password
           </label>
           <div className="input-password">
@@ -91,9 +129,9 @@ function Form(props) {
         <div className="container-buttonForm">
           <button
             className="button"
-            type="button"
+            type="submit"
             value="signUp"
-            onClick={() => props.handleClick(credentials)}
+            // onClick={() => props.handleClick(credentials)}
           >
             {props.textButton}
           </button>
