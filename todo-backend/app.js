@@ -2,6 +2,7 @@ const express = require("express");
 const helmet = require("helmet");
 const authenticateRouter = require("./routes/authentication.router");
 const userRouter = require("./routes/user.router");
+const path = require("path");
 
 const todosRouter = require("./routes/todos.router");
 const cors = require("cors");
@@ -42,5 +43,15 @@ app.use(cors());
 app.use("/", authenticateRouter);
 app.use("/delete/user", userRouter);
 app.use("/todos", todosRouter);
+
+// /*: after the get end point, will match everything following the slash, (match any end point not mentionned above)
+// when it find a route not matching one of the above ones, it passes it on to react app via index.html
+// this allows React (front-end) to roading instead
+
+app.get("/*", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "..", "todo-backend", "public", "index.html")
+  );
+});
 
 module.exports = app;
