@@ -14,9 +14,8 @@ async function httpFindAllTodos(req, res) {
     return res.status(400).json({ error: "Missing required id property" });
   }
   // controller manipulates data into a format that works for the api, then transforms it into json to return it to the front end
-  // passing parameters skip and limit to send this info to the DB
   const todos = await findAllTodos(userId);
-  console.log("todos controlers todos", todos);
+  console.log("todos controlers findalltodos");
 
   if (!todos) {
     return res.status(500).json({ Error: "Failed to fetch todo" });
