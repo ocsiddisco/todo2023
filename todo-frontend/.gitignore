@@ -15,7 +15,6 @@
 .DS_Store
 .env
 
-README2.md
 
 npm-debug.log*
 yarn-debug.log*
