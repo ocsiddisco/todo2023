@@ -5,6 +5,14 @@ import { useNavigate } from "react-router-dom";
 function Logout() {
   const navigate = useNavigate();
 
+  function checkToken() {
+    const token = sessionStorage.getItem("token");
+    if (!token) {
+      navigate("/");
+    }
+  }
+  checkToken();
+
   //
   //
   //---------------------- USER ----------------------

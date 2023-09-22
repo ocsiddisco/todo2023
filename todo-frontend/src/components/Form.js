@@ -97,16 +97,13 @@ function Form(props) {
             onChange={onInputChange}
             required
           />
-
-          <p
-            className={`error-message ${
-              submitted && !validateEmail(credentials.email)
-                ? ""
-                : "errorhidden"
-            }`}
-          >
-            Please enter a valid email address.
-          </p>
+          <div className="container-error-message">
+            {submitted && !validateEmail(credentials.email) && (
+              <p className="error-message">
+                Please enter a valid email address.
+              </p>
+            )}
+          </div>
           <label className="visuallyhidden" htmlFor="password">
             Password
           </label>
