@@ -243,17 +243,20 @@ border:none;
 background-color:#ffffff ;
 }
 
-.error-message {
+
+.container-error-message {
+  padding: 3px 0 0 10px;
   margin:0;
+  height:20px;
+}
+
+.error-message {
   color:rgb(192, 67, 67);
   font-size: 14px;
-  padding: 3px 0 0 10px;
-
+padding: 0;
+margin: 0;
 }
 
-.errorhidden{
-color: #f8f8f8;
-}
 
 .visuallyhidden {
   border: 0;
