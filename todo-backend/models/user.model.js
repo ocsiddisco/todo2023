@@ -7,10 +7,7 @@ async function deleteUser(userId) {
       // User not deleted
       return false;
     }
-
-    console.log({ result });
     console.log("User has been deleted");
-
     return true;
   } catch (error) {
     console.error("Error deleting user:", error);
