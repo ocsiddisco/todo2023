@@ -53,3 +53,8 @@ start develop script
 - Limit the number of tasks to be updated at once at a time
 - Add loading element
 - Write a proper 404 error page
+
+## Take a peek
+
+![todolist](https://github.com/ocsiddisco/todo2023/assets/114222588/0a693b8d-0f01-49d0-97e8-82905201807e)
+
